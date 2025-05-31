@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교육용 웹학습지 시스템</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        .worksheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .worksheet-card {
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            padding: 25px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .worksheet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        .worksheet-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .worksheet-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+        .grade-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 교육용 웹학습지 시스템</h1>
+        <p style="text-align: center; color: #666; font-size: 1.1em; margin-bottom: 40px;">
+            인터랙티브 웹학습지로 즐겁게 배워보세요!
+        </p>
+        
+        <div class="worksheet-grid">
+            <a href="grade3-friendship/" class="worksheet-card">
+                <div class="grade-badge">3학년</div>
+                <div class="worksheet-title">🤝 우애 학습지</div>
+                <div class="worksheet-desc">
+                    친구와의 우정에 대해 배우고, 서로 도우며 사는 방법을 익혀보세요.
+                    인터랙티브 활동으로 재미있게 학습할 수 있습니다.
+                </div>
+            </a>
+            
+            <a href="grade4-emotion/" class="worksheet-card">
+                <div class="grade-badge">4학년</div>
+                <div class="worksheet-title">😊 감정 관리 학습지</div>
+                <div class="worksheet-desc">
+                    다양한 감정을 이해하고 건강하게 표현하는 방법을 배워보세요.
+                    감정 일기와 실습 활동이 포함되어 있습니다.
+                </div>
+            </a>
+            
+            <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
+                <div class="grade-badge">5학년</div>
+                <div class="worksheet-title">🌱 성장 마인드셋</div>
+                <div class="worksheet-desc">
+                    곧 출시 예정입니다! 성장하는 마음가짐에 대해 배울 수 있는 학습지가 준비 중입니다.
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px; color: #888;">
+            <p>💡 이 시스템은 GitHub Pages + Google Apps Script로 구동됩니다</p>
+            <p>개발: plusiam | 목적: 수업연구, 시각화, 자동화</p>
+        </div>
+    </div>
+</body>
+</html>
