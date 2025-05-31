@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3학년 우애 학습지</title>
+    <link rel="stylesheet" href="../common/styles.css">
+    <style>
+        .question-card {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7e2 100%);
+            border: 2px solid #f687b3;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question-title {
+            font-size: 1.8em;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            padding: 20px;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        
+        .option-btn:hover {
+            border-color: #667eea;
+            background: #f0f4f8;
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            color: #2f855a;
+        }
+        
+        .option-btn.wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            color: #c53030;
+        }
+        
+        .character {
+            font-size: 4em;
+            margin: 10px 0;
+        }
+        
+        .next-btn {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .progress-container {
+            background: #e2e8f0;
+            border-radius: 20px;
+            height: 8px;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .score-display {
+            text-align: center;
+            font-size: 1.2em;
+            color: #4a5568;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤝 3학년 우애 학습지</h1>
+        
+        <div class="score-display">
+            <span id="currentQuestion">1</span> / <span id="totalQuestions">5</span> 문제
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div id="questionContainer">
+            <!-- 문제가 여기에 동적으로 생성됩니다 -->
+        </div>
+        
+        <div class="text-center">
+            <button class="btn btn-primary next-btn" id="nextBtn" onclick="nextQuestion()">
+                다음 문제
+            </button>
+            <button class="btn btn-success next-btn" id="finishBtn" onclick="finishQuiz()" style="display: none;">
+                학습 완료
+            </button>
+        </div>
+    </div>
+
+    <!-- 결과 모달 -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>🎉 학습 완료!</h2>
+            <div id="resultContent"></div>
+            <button class="btn btn-primary" onclick="location.href='../index.html'">
+                목록으로 돌아가기
+            </button>
+        </div>
+    </div>
+
+    <script src="../common/scripts.js"></script>
+    <script>
+        // 문제 데이터
+        const questions = [
+            {
+                id: 'q1',
+                character: '👦',
+                title: '친구가 놀이에서 실수했을 때 어떻게 해야 할까요?',
+                options: [
+                    { text: '화를 내며 그만두자고 한다', correct: false },
+                    { text: '"괜찮아, 다시 해보자"라고 말한다', correct: true },
+                    { text: '그 친구를 놀이에서 빼버린다', correct: false },
+                    { text: '다른 친구들에게 말한다', correct: false }
+                ]
+            },
+            {
+                id: 'q2',
+                character: '👧',
+                title: '친구가 슬퍼하고 있을 때 가장 좋은 행동은?',
+                options: [
+                    { text: '모르는 척 지나간다', correct: false },
+                    { text: '"왜 울어?"라고 물어본다', correct: true },
+                    { text: '다른 친구들과 놀러 간다', correct: false },
+                    { text: '선생님께만 말씀드린다', correct: false }
+                ]
+            },
+            {
+                id: 'q3',
+                character: '🧒',
+                title: '친구와 의견이 다를 때 어떻게 해결해야 할까요?',
+                options: [
+                    { text: '내 의견만 고집한다', correct: false },
+                    { text: '서로 이야기해서 해결책을 찾는다', correct: true },
+                    { text: '그냥 포기한다', correct: false },
+                    { text: '다른 사람에게 판단을 맡긴다', correct: false }
+                ]
+            },
+            {
+                id: 'q4',
+                character: '👫',
+                title: '새로운 친구가 우리 반에 왔을 때 어떻게 해야 할까요?',
+                options: [
+                    { text: '관심을 갖지 않는다', correct: false },
+                    { text: '따뜻하게 맞이하고 친구가 되어준다', correct: true },
+                    { text: '기존 친구들과만 논다', correct: false },
+                    { text: '며칠 지켜본 후 결정한다', correct: false }
+                ]
+            },
+            {
+                id: 'q5',
+                character: '🤝',
+                title: '친구가 도움을 요청했을 때 가장 좋은 태도는?',
+                options: [
+                    { text: '너무 바빠서 도와줄 수 없다고 한다', correct: false },
+                    { text: '기꺼이 도와주며 함께 해결한다', correct: true },
+                    { text: '다른 사람에게 부탁하라고 한다', correct: false },
+                    { text: '나중에 하자고 미룬다', correct: false }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let session = null;
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            session = new LearningSession('grade3-friendship');
+            document.getElementById('totalQuestions').textContent = questions.length;
+            showQuestion(currentQuestionIndex);
+        });
+
+        function showQuestion(index) {
+            const question = questions[index];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="question-card">
+                    <div class="character">${question.character}</div>
+                    <div class="question-title">${question.title}</div>
+                    <div class="options">
+                        ${question.options.map((option, i) => 
+                            `<div class="option-btn" onclick="selectOption(${i}, ${option.correct})">${option.text}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // 진행률 업데이트
+            const progress = ((index + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = index + 1;
+        }
+
+        function selectOption(optionIndex, isCorrect) {
+            const question = questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option-btn');
+            
+            // 모든 버튼 비활성화
+            options.forEach(btn => btn.style.pointerEvents = 'none');
+            
+            // 정답 표시
+            options.forEach((btn, i) => {
+                if (question.options[i].correct) {
+                    btn.classList.add('correct');
+                } else if (i === optionIndex && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+            
+            // 답안 기록
+            session.addAnswer(
+                question.id, 
+                question.options[optionIndex].text, 
+                isCorrect
+            );
+            
+            // 피드백 표시
+            if (isCorrect) {
+                showAlert('정답입니다! 🎉', 'success');
+            } else {
+                showAlert('다시 생각해보세요. 정답을 확인해보세요!', 'warning');
+            }
+            
+            // 다음 버튼 표시
+            if (currentQuestionIndex < questions.length - 1) {
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('finishBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            document.getElementById('nextBtn').style.display = 'none';
+            showQuestion(currentQuestionIndex);
+        }
+
+        async function finishQuiz() {
+            const results = await session.finish();
+            
+            if (results) {
+                const correctRate = Math.round((results.correctAnswers / results.totalQuestions) * 100);
+                let grade = '';
+                let message = '';
+                
+                if (correctRate >= 80) {
+                    grade = '🏆 훌륭해요!';
+                    message = '우애에 대해 정말 잘 알고 있네요!';
+                } else if (correctRate >= 60) {
+                    grade = '👍 잘했어요!';
+                    message = '우애의 중요성을 잘 이해하고 있어요!';
+                } else {
+                    grade = '💪 다시 도전!';
+                    message = '친구와의 우정에 대해 다시 생각해보세요!';
+                }
+                
+                document.getElementById('resultContent').innerHTML = `
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">${grade}</div>
+                        <p>정답률: ${correctRate}% (${results.correctAnswers}/${results.totalQuestions})</p>
+                        <p>학습 시간: ${Math.round(results.duration / 60)}분 ${results.duration % 60}초</p>
+                        <p style="color: #666; margin-top: 20px;">${message}</p>
+                    </div>
+                `;
+                
+                showModal('resultModal');
+            }
+        }
+    </script>
+</body>
+</html>
