@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3학년 3단원 3차시 - 약속을 지키며 살아요</title>
+    <link rel="stylesheet" href="../common/styles.css">
+    <style>
+        .lesson-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .lesson-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        
+        .situation-card {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border: 2px solid #ffb74d;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .character-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .situation-text {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .choice-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .choice-btn {
+            padding: 15px 20px;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .choice-btn:hover {
+            border-color: #667eea;
+            background: #f0f4f8;
+            transform: translateY(-2px);
+        }
+        
+        .choice-btn.correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            color: #2f855a;
+        }
+        
+        .choice-btn.wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            color: #c53030;
+        }
+        
+        .reflection-section {
+            background: #f0fff4;
+            border-left: 5px solid #48bb78;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .progress-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .lesson-objectives {
+            background: #e6fffa;
+            border: 2px solid #4fd1c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #718096;
+        }
+        
+        .step.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .step.completed {
+            background: #48bb78;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lesson-header">
+            <h1>🤝 3학년 3단원 3차시</h1>
+            <h2>약속을 지키며 살아요</h2>
+            <div class="lesson-info">
+                <div>📚 교과: 도덕</div>
+                <div>👥 대상: 초등학교 3학년</div>
+                <div>⏰ 차시: 3단원 3차시</div>
+                <div>🎯 주제: 약속의 소중함</div>
+            </div>
+        </div>
+        
+        <div class="lesson-objectives">
+            <h3>🎯 학습목표</h3>
+            <ul>
+                <li>약속을 지키는 것이 왜 중요한지 알 수 있다.</li>
+                <li>약속을 지키지 않았을 때의 문제점을 이해할 수 있다.</li>
+                <li>일상생활에서 약속을 지키려는 마음을 가질 수 있다.</li>
+            </ul>
+        </div>
+        
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step" id="step4">4</div>
+            <div class="step" id="step5">5</div>
+        </div>
+        
+        <div class="progress-section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">학습 진행도</span>
+                <span class="progress-text"><span id="currentStep">1</span> / 5 단계</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 20%;"></div>
+            </div>
+        </div>
+        
+        <div id="activityContainer">
+            <!-- 활동이 여기에 동적으로 생성됩니다 -->
+        </div>
+        
+        <div class="text-center">
+            <button class="btn btn-primary next-btn" id="nextBtn" onclick="nextActivity()">
+                다음 활동
+            </button>
+            <button class="btn btn-success next-btn" id="finishBtn" onclick="finishLesson()" style="display: none;">
+                학습 완료
+            </button>
+        </div>
+    </div>
+
+    <!-- 완료 모달 -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>🎉 학습 완료!</h2>
+            <div id="resultContent"></div>
+            <button class="btn btn-primary" onclick="location.href='../index.html'">
+                목록으로 돌아가기
+            </button>
+        </div>
+    </div>
+
+    <script src="../common/scripts.js"></script>
+    <script>
+        // 학습 활동 데이터
+        const activities = [
+            {
+                id: 'activity1',
+                type: 'situation',
+                title: '상황 1: 친구와의 놀이 약속',
+                character: '👦',
+                situation: '민수는 친구 지호와 토요일 오후 2시에 공원에서 만나기로 약속했습니다. 그런데 토요일 아침에 할머니가 갑자기 놀러 오셨어요.',
+                question: '민수는 어떻게 해야 할까요?',
+                choices: [
+                    { text: '지호에게 미리 연락해서 약속 시간을 바꿔달라고 부탁한다', correct: true },
+                    { text: '그냥 가지 않고 연락도 하지 않는다', correct: false },
+                    { text: '할머니보다 친구가 더 중요하니 약속대로 나간다', correct: false },
+                    { text: '늦어도 상관없으니 시간 맞춰 나간다', correct: false }
+                ],
+                explanation: '약속은 서로를 배려하는 마음에서 시작됩니다. 상황이 생겼을 때는 미리 연락해서 상대방이 기다리지 않도록 하는 것이 좋습니다.'
+            },
+            {
+                id: 'activity2',
+                type: 'situation',
+                title: '상황 2: 숙제 검사 약속',
+                character: '👧',
+                situation: '선생님께서 "내일까지 과학 관찰일기를 꼭 써와야 한다"고 하셨습니다. 하지만 수진이는 좋아하는 TV 프로그램을 보느라 깜빡했어요.',
+                question: '수진이는 어떻게 해야 할까요?',
+                choices: [
+                    { text: '친구 것을 베껴서 빨리 써간다', correct: false },
+                    { text: '선생님께 솔직하게 말씀드리고 다음에는 꼭 하겠다고 약속한다', correct: true },
+                    { text: '아픈 척해서 학교에 가지 않는다', correct: false },
+                    { text: '숙제를 안 해온 친구들을 찾아서 같이 변명한다', correct: false }
+                ],
+                explanation: '실수했을 때는 솔직하게 인정하고 다음에는 더 잘하겠다는 마음가짐이 중요합니다. 거짓말이나 부정한 방법은 더 큰 문제를 만들어요.'
+            },
+            {
+                id: 'activity3',
+                type: 'situation',
+                title: '상황 3: 물건 빌려주기 약속',
+                character: '🧒',
+                situation: '태우는 친구 현우에게 소중한 만화책을 빌려줬습니다. 현우는 "일주일 후에 꼭 돌려주겠다"고 약속했는데, 벌써 2주일이 지났어요.',
+                question: '이런 상황에서 태우는 어떻게 해야 할까요?',
+                choices: [
+                    { text: '화를 내며 당장 돌려달라고 소리친다', correct: false },
+                    { text: '현우에게 친절하게 만화책을 언제 돌려줄 수 있는지 물어본다', correct: true },
+                    { text: '그냥 포기하고 아무 말도 하지 않는다', correct: false },
+                    { text: '다른 친구들에게 현우 욕을 한다', correct: false }
+                ],
+                explanation: '약속을 지키지 않는 친구에게도 친절하고 이해하는 마음으로 대화하는 것이 좋습니다. 화를 내거나 포기하지 말고 서로 이야기해보세요.'
+            },
+            {
+                id: 'activity4',
+                type: 'situation',
+                title: '상황 4: 가족과의 약속',
+                character: '👨‍👩‍👧‍👦',
+                situation: '지민이는 엄마와 "방을 깨끗이 정리하면 주말에 놀이공원에 가자"고 약속했습니다. 지민이가 열심히 방을 정리했는데, 엄마가 갑자기 일이 생겨서 못 간다고 하세요.',
+                question: '이때 지민이는 어떤 마음가짐을 가져야 할까요?',
+                choices: [
+                    { text: '엄마가 약속을 어겼으니 화를 내고 삐진다', correct: false },
+                    { text: '엄마의 상황을 이해하고 다른 날을 기다린다', correct: true },
+                    { text: '방 정리를 다시 어지럽힌다', correct: false },
+                    { text: '앞으로는 엄마 말을 듣지 않겠다고 한다', correct: false }
+                ],
+                explanation: '가족도 때로는 어쩔 수 없는 상황이 생길 수 있어요. 서로 이해하고 배려하는 마음이 가족 간의 약속을 더욱 소중하게 만듭니다.'
+            },
+            {
+                id: 'activity5',
+                type: 'reflection',
+                title: '생각 정리하기',
+                character: '💭',
+                question: '오늘 배운 내용을 바탕으로 여러분만의 약속 지키기 다짐을 써보세요.',
+                prompt: '나는 앞으로 약속을 지키기 위해...',
+                examples: [
+                    '약속한 내용을 잊지 않도록 메모하겠습니다.',
+                    '상황이 생기면 미리 연락드리겠습니다.',
+                    '다른 사람의 입장도 생각해보겠습니다.',
+                    '작은 약속부터 차근차근 지켜나가겠습니다.'
+                ]
+            }
+        ];
+
+        let currentActivityIndex = 0;
+        let session = null;
+        let userPromises = [];
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            session = new LearningSession('grade3-unit3-lesson3-promise');
+            showActivity(currentActivityIndex);
+        });
+
+        function showActivity(index) {
+            const activity = activities[index];
+            const container = document.getElementById('activityContainer');
+            
+            // 단계 표시 업데이트
+            updateStepIndicator(index);
+            
+            if (activity.type === 'situation') {
+                container.innerHTML = `
+                    <div class="situation-card">
+                        <div class="character-icon">${activity.character}</div>
+                        <h3>${activity.title}</h3>
+                        <div class="situation-text">${activity.situation}</div>
+                        <h4 style="color: #667eea; margin: 20px 0;">${activity.question}</h4>
+                        <div class="choice-buttons">
+                            ${activity.choices.map((choice, i) => 
+                                `<div class="choice-btn" onclick="selectChoice(${i}, ${choice.correct}, '${activity.explanation}')">${choice.text}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (activity.type === 'reflection') {
+                container.innerHTML = `
+                    <div class="situation-card">
+                        <div class="character-icon">${activity.character}</div>
+                        <h3>${activity.title}</h3>
+                        <div class="situation-text">${activity.question}</div>
+                        <div style="text-align: left; margin: 20px 0;">
+                            <h4 style="margin-bottom: 10px;">💡 참고 예시:</h4>
+                            <ul style="list-style: none; padding: 0;">
+                                ${activity.examples.map(example => `<li style="margin: 5px 0; padding: 8px; background: #f0f4f8; border-radius: 5px;">• ${example}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <textarea id="promiseText" 
+                            placeholder="${activity.prompt}" 
+                            style="width: 100%; height: 100px; padding: 15px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em; resize: vertical;"
+                            onkeyup="checkPromiseInput()"></textarea>
+                    </div>
+                `;
+            }
+            
+            // 진행률 업데이트
+            const progress = ((index + 1) / activities.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentStep').textContent = index + 1;
+        }
+
+        function updateStepIndicator(currentIndex) {
+            for (let i = 1; i <= 5; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.className = 'step';
+                
+                if (i < currentIndex + 1) {
+                    step.classList.add('completed');
+                } else if (i === currentIndex + 1) {
+                    step.classList.add('active');
+                }
+            }
+        }
+
+        function selectChoice(choiceIndex, isCorrect, explanation) {
+            const activity = activities[currentActivityIndex];
+            const choices = document.querySelectorAll('.choice-btn');
+            
+            // 모든 버튼 비활성화
+            choices.forEach(btn => btn.style.pointerEvents = 'none');
+            
+            // 정답 표시
+            choices.forEach((btn, i) => {
+                if (activity.choices[i].correct) {
+                    btn.classList.add('correct');
+                } else if (i === choiceIndex && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+            
+            // 답안 기록
+            session.addAnswer(
+                activity.id, 
+                activity.choices[choiceIndex].text, 
+                isCorrect
+            );
+            
+            // 설명 표시
+            setTimeout(() => {
+                showAlert(explanation, isCorrect ? 'success' : 'warning');
+                
+                if (currentActivityIndex < activities.length - 1) {
+                    document.getElementById('nextBtn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('finishBtn').style.display = 'inline-block';
+                }
+            }, 1000);
+        }
+
+        function checkPromiseInput() {
+            const textarea = document.getElementById('promiseText');
+            if (textarea.value.trim().length > 10) {
+                // 다짐을 충분히 작성했으면 기록
+                userPromises.push(textarea.value.trim());
+                session.addAnswer('reflection', textarea.value.trim(), true);
+                
+                document.getElementById('finishBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextActivity() {
+            currentActivityIndex++;
+            document.getElementById('nextBtn').style.display = 'none';
+            showActivity(currentActivityIndex);
+        }
+
+        async function finishLesson() {
+            const results = await session.finish();
+            
+            if (results) {
+                const correctRate = Math.round((results.correctAnswers / results.totalQuestions) * 100);
+                let grade = '';
+                let message = '';
+                
+                if (correctRate >= 80) {
+                    grade = '🏆 우수';
+                    message = '약속의 소중함을 잘 이해했어요!';
+                } else if (correctRate >= 60) {
+                    grade = '👍 양호';
+                    message = '약속에 대해 잘 생각해보았어요!';
+                } else {
+                    grade = '💪 노력';
+                    message = '약속의 중요성을 다시 한번 생각해보세요!';
+                }
+                
+                let promiseDisplay = '';
+                if (userPromises.length > 0) {
+                    promiseDisplay = `
+                        <div style="background: #f0fff4; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                            <h4>📝 나의 다짐:</h4>
+                            <p style="font-style: italic; color: #2d3748;">"${userPromises[userPromises.length - 1]}"</p>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('resultContent').innerHTML = `
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">${grade}</div>
+                        <p>정답률: ${correctRate}% (${results.correctAnswers}/${results.totalQuestions})</p>
+                        <p>학습 시간: ${Math.round(results.duration / 60)}분 ${results.duration % 60}초</p>
+                        ${promiseDisplay}
+                        <p style="color: #666; margin-top: 20px;">${message}</p>
+                        <div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                            <h4 style="color: #234e52;">💡 기억하세요!</h4>
+                            <p style="color: #234e52;">약속은 나와 상대방을 모두 소중히 여기는 마음에서 시작됩니다.</p>
+                        </div>
+                    </div>
+                `;
+                
+                showModal('resultModal');
+            }
+        }
+    </script>
+</body>
+</html>
