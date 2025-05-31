@@ -1,0 +1,42 @@
+{
+  "project": {
+    "name": "교육용 웹학습지 시스템",
+    "version": "1.0.0",
+    "description": "GitHub Pages + Google Apps Script 연동 교육 시스템",
+    "author": "plusiam",
+    "repository": "https://github.com/plusiam/edu-worksheet-system"
+  },
+  "github": {
+    "pages_url": "https://plusiam.github.io/edu-worksheet-system/web-worksheets/",
+    "api_url": "https://api.github.com/repos/plusiam/edu-worksheet-system"
+  },
+  "apps_script": {
+    "web_app_url": "YOUR_WEB_APP_URL_HERE",
+    "script_id": "YOUR_SCRIPT_ID_HERE",
+    "spreadsheet_id": "YOUR_SPREADSHEET_ID_HERE"
+  },
+  "features": {
+    "auto_save": true,
+    "real_time_analytics": true,
+    "email_reports": true,
+    "backup_enabled": true,
+    "progress_tracking": true
+  },
+  "limits": {
+    "max_questions_per_worksheet": 50,
+    "max_session_duration_minutes": 60,
+    "backup_retention_days": 30
+  },
+  "email": {
+    "admin_email": "your-email@gmail.com",
+    "daily_report_time": "09:00",
+    "weekly_report_day": "monday"
+  },
+  "ui": {
+    "primary_color": "#667eea",
+    "secondary_color": "#764ba2",
+    "success_color": "#4caf50",
+    "warning_color": "#ff9800",
+    "error_color": "#f44336"
+  }
+}
