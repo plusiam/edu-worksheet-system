@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3학년 3단원 3차시 - 우애를 지켜요</title>
+    <link rel="stylesheet" href="../common/styles.css">
+    <style>
+        .lesson-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #2d3748;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 3px solid #f687b3;
+        }
+        
+        .lesson-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        
+        .activity-card {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7e2 100%);
+            border: 3px solid #f687b3;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .family-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .situation-text {
+            font-size: 1.3em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .choice-btn {
+            padding: 20px;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .choice-btn:hover {
+            border-color: #f687b3;
+            background: #fef5e7;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .choice-btn.correct {
+            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+            border-color: #48bb78;
+            color: #2f855a;
+            animation: correctPulse 0.6s ease-in-out;
+        }
+        
+        .choice-btn.wrong {
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+            border-color: #f56565;
+            color: #c53030;
+            animation: wrongShake 0.6s ease-in-out;
+        }
+        
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #718096;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .step.completed {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+        
+        .step::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background: #e2e8f0;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        .step.completed::after {
+            background: #48bb78;
+        }
+        
+        .reflection-section {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border: 3px solid #4fd1c7;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .practice-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 20px;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 1.1em;
+            resize: vertical;
+            margin: 15px 0;
+            font-family: 'Malgun Gothic', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .practice-input:focus {
+            border-color: #f687b3;
+            outline: none;
+            box-shadow: 0 0 15px rgba(246, 135, 179, 0.2);
+        }
+        
+        .learning-objectives {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border: 3px solid #63b3ed;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .next-btn {
+            margin-top: 25px;
+            display: none;
+            background: linear-gradient(135deg, #f687b3 0%, #f093fb 100%);
+            transform: scale(1.05);
+        }
+        
+        .next-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(246, 135, 179, 0.3);
+        }
+        
+        .progress-section {
+            background: linear-gradient(135deg, #fff 0%, #f7fafc 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .character-dialogue {
+            background: white;
+            border: 3px solid #fbb6ce;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .character-dialogue::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #fbb6ce;
+        }
+        
+        .analysis-section {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 3px solid #f59e0b;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lesson-header">
+            <h1>👨‍👩‍👧‍👦 3학년 3단원 3차시</h1>
+            <h2>우애를 지켜요</h2>
+            <div class="lesson-info">
+                <div>📚 단원: 함께하는 우리 가족</div>
+                <div>👥 대상: 초등학교 3학년</div>
+                <div>⏰ 차시: 3단원 3차시</div>
+                <div>🎯 주제: 형제자매 사이의 우애</div>
+            </div>
+        </div>
+        
+        <div class="learning-objectives">
+            <h3>🎯 학습 목표</h3>
+            <ul style="text-align: left; margin: 10px 0;">
+                <li>형제자매 사이에서 우애를 실천하는 태도를 익힌다.</li>
+                <li>갈등이 생길 수 있는 상황을 이해하고 해결하는 방법을 찾아본다.</li>
+                <li>가족과 사이좋게 지내기 위한 자신의 실천 계획을 세운다.</li>
+            </ul>
+            <div style="background: #2b6cb0; color: white; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <strong>🤔 학습 문제</strong><br>
+                우리는 형제자매와 어떻게 사이좋게 지낼 수 있을까요?
+            </div>
+        </div>
+        
+        <div class="step-indicator">
+            <div class="step active" id="step1">도입</div>
+            <div class="step" id="step2">분석</div>
+            <div class="step" id="step3">해결</div>
+            <div class="step" id="step4">실천</div>
+            <div class="step" id="step5">정리</div>
+        </div>
+        
+        <div class="progress-section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold; font-size: 1.1em;">📈 학습 진행도</span>
+                <span class="progress-text"><span id="currentStep">1</span> / 5 단계</span>
+            </div>
+            <div class="progress-bar" style="margin: 15px 0;">
+                <div class="progress-fill" id="progressBar" style="width: 20%;"></div>
+            </div>
+        </div>
+        
+        <div id="activityContainer">
+            <!-- 활동이 여기에 동적으로 생성됩니다 -->
+        </div>
+        
+        <div class="text-center">
+            <button class="btn btn-primary next-btn" id="nextBtn" onclick="nextActivity()">
+                다음 단계로 ➡️
+            </button>
+            <button class="btn btn-success next-btn" id="finishBtn" onclick="finishLesson()" style="display: none;">
+                학습 완료 🎉
+            </button>
+        </div>
+    </div>
+
+    <!-- 완료 모달 -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <h2>🎉 우애 학습 완료!</h2>
+            <div id="resultContent"></div>
+            <button class="btn btn-primary" onclick="location.href='../index.html'">
+                목록으로 돌아가기
+            </button>
+        </div>
+    </div>
+
+    <script src="../common/scripts.js"></script>
+    <script>
+        // 학습 활동 데이터 (교수학습지도안에 맞춤)
+        const activities = [
+            {
+                id: 'introduction',
+                type: 'story',
+                title: '도입: 형제자매 갈등 상황 이야기',
+                character: '👦👧',
+                story: `
+                    <div class="character-dialogue">
+                        <strong>🏠 김가네 이야기</strong><br><br>
+                        초등학교 3학년 민수와 2학년 지수는 한 방을 쓰는 남매입니다. 
+                        오늘 민수가 학교에서 돌아와보니 자신의 레고 블록으로 지수가 놀고 있었어요.
+                        <br><br>
+                        <strong>민수:</strong> "야! 내 레고 왜 허락도 없이 만져?" 😠<br>
+                        <strong>지수:</strong> "형이 안 쓰고 있었잖아! 나도 놀고 싶어!" 😢<br>
+                        <strong>민수:</strong> "내 거니까 내가 돌아오면 바로 치워야지!" 😤<br>
+                        <strong>지수:</strong> "형은 맨날 혼자만 놀려고 해!" 😭
+                    </div>
+                `,
+                question: '이런 상황을 보면서 여러분의 기분은 어떨까요?',
+                choices: [
+                    { text: '민수의 기분이 이해가 돼요. 내 물건을 허락 없이 쓰면 화날 것 같아요.', correct: true },
+                    { text: '지수의 기분이 이해가 돼요. 형제끼리는 나눠 써야 한다고 생각해요.', correct: true },
+                    { text: '둘 다 잘못된 것 같아요. 서로 이야기를 했으면 좋겠어요.', correct: true },
+                    { text: '우리 집에서도 이런 일이 자주 있어서 마음이 아파요.', correct: true }
+                ],
+                explanation: '여러분 모두 맞습니다! 각자의 입장을 이해하는 것이 우애의 시작이에요. 이제 이런 상황을 어떻게 해결할 수 있는지 함께 알아볼까요?'
+            },
+            {
+                id: 'analysis1',
+                type: 'analysis',
+                title: '활동 1: 갈등 상황 분석하기',
+                character: '🔍',
+                situation: '민수와 지수의 갈등 상황을 다시 한번 살펴보세요. 왜 이런 갈등이 생겼을까요?',
+                question: '갈등이 생긴 가장 큰 이유는 무엇일까요?',
+                choices: [
+                    { text: '서로 미리 이야기하지 않고 자기 생각만 했기 때문', correct: true },
+                    { text: '민수가 너무 이기적이어서', correct: false },
+                    { text: '지수가 허락을 받지 않고 써서', correct: false },
+                    { text: '부모님이 규칙을 정해주지 않아서', correct: false }
+                ],
+                explanation: '맞아요! 서로 대화하고 배려하지 않아서 생긴 문제예요. 민수도 지수도 각자 이유가 있지만, 미리 이야기했다면 갈등을 피할 수 있었을 거예요.'
+            },
+            {
+                id: 'analysis2',
+                type: 'situation',
+                title: '활동 1: 다른 갈등 상황 분석하기',
+                character: '📺',
+                situation: '저녁 시간, 형 준호(5학년)와 동생 서연이(3학년)가 TV 채널을 두고 다투고 있습니다. 준호는 축구를 보고 싶어하고, 서연이는 만화를 보고 싶어해요.',
+                question: '이런 상황에서 우애로운 해결 방법은 무엇일까요?',
+                choices: [
+                    { text: '형이 동생에게 양보해야 한다', correct: false },
+                    { text: '서로 시간을 나누어서 보기로 약속한다', correct: true },
+                    { text: '부모님께 판단을 맡긴다', correct: false },
+                    { text: '더 큰 소리로 우기는 사람이 이긴다', correct: false }
+                ],
+                explanation: '훌륭해요! 서로 양보하고 타협하는 것이 진정한 우애입니다. 시간을 나누어 사용하면 둘 다 만족할 수 있어요.'
+            },
+            {
+                id: 'solution1',
+                type: 'roleplay',
+                title: '활동 2: 역할놀이 - 갈등을 우애로 해결하기',
+                character: '🎭',
+                situation: `
+                    <div class="analysis-section">
+                        <h4>🎜 역할놀이 상황</h4>
+                        <p><strong>상황:</strong> 언니 소희(4학년)와 동생 민지(2학년)가 새로 산 색연필을 두고 다투고 있어요.</p>
+                        <p><strong>언니 소희:</strong> "이건 내가 받은 선물이야!"</p>
+                        <p><strong>동생 민지:</strong> "나도 예쁜 색연필로 그림 그리고 싶어!"</p>
+                    </div>
+                `,
+                question: '소희는 어떻게 말하면 우애로운 해결이 될까요?',
+                choices: [
+                    { text: '"내 거니까 안 돼!" 라고 단호하게 말한다', correct: false },
+                    { text: '"민지야, 함께 쓰자! 네가 쓸 때는 미리 말해줘" 라고 말한다', correct: true },
+                    { text: '"엄마한테 새로 사달라고 해" 라고 말한다', correct: false },
+                    { text: '아무 말도 하지 않고 숨긴다', correct: false }
+                ],
+                explanation: '정말 좋아요! 함께 나누어 쓰자고 제안하면서도 서로 배려하는 방법을 제시했네요. 이것이 바로 우애입니다!'
+            },
+            {
+                id: 'practice',
+                type: 'reflection',
+                title: '활동 3: 나의 우애 실천 방법 찾기',
+                character: '💖',
+                question: '여러분은 형제자매와 사이좋게 지내기 위해 어떤 일을 실천하고 싶나요?',
+                prompt: '나는 형제자매와 우애롭게 지내기 위해...',
+                examples: [
+                    '서로의 물건을 쓸 때는 미리 허락을 구하겠습니다.',
+                    '동생(형/언니)의 마음을 먼저 생각해보겠습니다.',
+                    '갈등이 생기면 소리지르지 않고 차근차근 이야기하겠습니다.',
+                    '내가 먼저 양보하고 배려하겠습니다.',
+                    '가족의 물건은 함께 나누어 사용하겠습니다.',
+                    '동생(형/언니)이 힘들어할 때 도와주겠습니다.'
+                ]
+            }
+        ];
+
+        let currentActivityIndex = 0;
+        let session = null;
+        let userPractices = [];
+        const stepNames = ['도입', '분석', '해결', '실천', '정리'];
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            session = new LearningSession('grade3-unit3-lesson3-brotherly-love');
+            showActivity(currentActivityIndex);
+        });
+
+        function showActivity(index) {
+            const activity = activities[index];
+            const container = document.getElementById('activityContainer');
+            
+            // 단계 표시 업데이트
+            updateStepIndicator(index);
+            
+            if (activity.type === 'story') {
+                container.innerHTML = `
+                    <div class="activity-card">
+                        <div class="family-icon">${activity.character}</div>
+                        <h3>${activity.title}</h3>
+                        <div class="situation-text">${activity.story}</div>
+                        <h4 style="color: #667eea; margin: 20px 0;">${activity.question}</h4>
+                        <div class="choice-grid">
+                            ${activity.choices.map((choice, i) => 
+                                `<div class="choice-btn" onclick="selectChoice(${i}, ${choice.correct}, '${activity.explanation}')">${choice.text}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (activity.type === 'analysis' || activity.type === 'situation' || activity.type === 'roleplay') {
+                container.innerHTML = `
+                    <div class="activity-card">
+                        <div class="family-icon">${activity.character}</div>
+                        <h3>${activity.title}</h3>
+                        <div class="situation-text">${activity.situation}</div>
+                        <h4 style="color: #667eea; margin: 20px 0;">${activity.question}</h4>
+                        <div class="choice-grid">
+                            ${activity.choices.map((choice, i) => 
+                                `<div class="choice-btn" onclick="selectChoice(${i}, ${choice.correct}, '${activity.explanation}')">${choice.text}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (activity.type === 'reflection') {
+                container.innerHTML = `
+                    <div class="reflection-section">
+                        <div class="family-icon">${activity.character}</div>
+                        <h3>${activity.title}</h3>
+                        <div class="situation-text">${activity.question}</div>
+                        <div style="text-align: left; margin: 25px 0;">
+                            <h4 style="margin-bottom: 15px; color: #2b6cb0;">💡 실천 방법 예시:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                ${activity.examples.map(example => 
+                                    `<div style="padding: 12px; background: #f0f4f8; border-radius: 8px; border-left: 4px solid #667eea;">• ${example}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        <textarea id="practiceText" 
+                            class="practice-input"
+                            placeholder="${activity.prompt}" 
+                            onkeyup="checkPracticeInput()"></textarea>
+                        <div style="color: #666; font-size: 0.9em; margin-top: 10px;">
+                            💭 구체적이고 실천 가능한 방법을 써보세요!
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 진행률 업데이트
+            const progress = ((index + 1) / activities.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentStep').textContent = index + 1;
+        }
+
+        function updateStepIndicator(currentIndex) {
+            stepNames.forEach((name, i) => {
+                const step = document.getElementById(`step${i + 1}`);
+                step.className = 'step';
+                step.textContent = name;
+                
+                if (i < currentIndex) {
+                    step.classList.add('completed');
+                } else if (i === currentIndex) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        function selectChoice(choiceIndex, isCorrect, explanation) {
+            const activity = activities[currentActivityIndex];
+            const choices = document.querySelectorAll('.choice-btn');
+            
+            // 모든 버튼 비활성화
+            choices.forEach(btn => btn.style.pointerEvents = 'none');
+            
+            // 정답 표시 (도입 단계는 모든 답이 맞음)
+            if (activity.id === 'introduction') {
+                choices[choiceIndex].classList.add('correct');
+            } else {
+                choices.forEach((btn, i) => {
+                    if (activity.choices[i].correct) {
+                        btn.classList.add('correct');
+                    } else if (i === choiceIndex && !isCorrect) {
+                        btn.classList.add('wrong');
+                    }
+                });
+            }
+            
+            // 답안 기록
+            session.addAnswer(
+                activity.id, 
+                activity.choices[choiceIndex].text, 
+                isCorrect || activity.id === 'introduction'
+            );
+            
+            // 설명 표시
+            setTimeout(() => {
+                showAlert(explanation, 'success');
+                
+                if (currentActivityIndex < activities.length - 1) {
+                    document.getElementById('nextBtn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('finishBtn').style.display = 'inline-block';
+                }
+            }, 1000);
+        }
+
+        function checkPracticeInput() {
+            const textarea = document.getElementById('practiceText');
+            if (textarea.value.trim().length > 15) {
+                // 실천 계획을 충분히 작성했으면 기록
+                userPractices.push(textarea.value.trim());
+                session.addAnswer('practice_plan', textarea.value.trim(), true);
+                
+                document.getElementById('finishBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextActivity() {
+            currentActivityIndex++;
+            document.getElementById('nextBtn').style.display = 'none';
+            showActivity(currentActivityIndex);
+        }
+
+        async function finishLesson() {
+            const results = await session.finish();
+            
+            if (results) {
+                const correctRate = Math.round((results.correctAnswers / results.totalQuestions) * 100);
+                let grade = '';
+                let message = '';
+                
+                if (correctRate >= 80) {
+                    grade = '🏆 우수';
+                    message = '우애의 참된 의미를 깊이 이해했어요!';
+                } else if (correctRate >= 60) {
+                    grade = '👍 양호';
+                    message = '형제자매 사이의 우애에 대해 잘 생각해보았어요!';
+                } else {
+                    grade = '💪 노력';
+                    message = '우애의 소중함을 다시 한번 생각해보세요!';
+                }
+                
+                let practiceDisplay = '';
+                if (userPractices.length > 0) {
+                    practiceDisplay = `
+                        <div style="background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: left; border: 3px solid #48bb78;">
+                            <h4 style="color: #2f855a; margin-bottom: 10px;">📋 나의 우애 실천 계획:</h4>
+                            <p style="font-style: italic; color: #2d3748; font-size: 1.1em; line-height: 1.6;">"${userPractices[userPractices.length - 1]}"</p>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('resultContent').innerHTML = `
+                    <div style="text-align: center; margin: 25px 0;">
+                        <div style="font-size: 2.2em; margin-bottom: 15px;">${grade}</div>
+                        <p style="font-size: 1.1em;">정답률: <strong>${correctRate}%</strong> (${results.correctAnswers}/${results.totalQuestions})</p>
+                        <p style="font-size: 1.1em;">학습 시간: <strong>${Math.round(results.duration / 60)}분 ${results.duration % 60}초</strong></p>
+                        ${practiceDisplay}
+                        <p style="color: #666; margin-top: 25px; font-size: 1.1em;">${message}</p>
+                        <div style="background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%); padding: 20px; border-radius: 15px; margin-top: 25px; border: 3px solid #63b3ed;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">💝 오늘의 배움</h4>
+                            <p style="color: #2c5282; font-size: 1.1em; font-weight: 500;">
+                                우애란 서로를 이해하고 배려하며, 함께 행복해지려고 노력하는 아름다운 마음입니다. 
+                                여러분의 작은 실천이 가족 모두를 더욱 행복하게 만들어요! 🏠💕
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                showModal('resultModal');
+            }
+        }
+    </script>
+</body>
+</html>
