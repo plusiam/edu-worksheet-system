@@ -46,6 +46,10 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             border-color: #667eea;
         }
+        .worksheet-card.featured {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7e2 100%);
+            border-color: #f687b3;
+        }
         .worksheet-title {
             font-size: 1.4em;
             font-weight: bold;
@@ -65,6 +69,30 @@
             font-size: 0.9em;
             margin-bottom: 10px;
         }
+        .lesson-badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+        .new-badge {
+            display: inline-block;
+            background: #f56565;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -75,6 +103,19 @@
         </p>
         
         <div class="worksheet-grid">
+            <a href="grade3-unit3-lesson3/" class="worksheet-card featured">
+                <div class="grade-badge">3학년</div>
+                <div class="lesson-badge">3단원 3차시</div>
+                <span class="new-badge">NEW</span>
+                <div class="worksheet-title">🤝 약속을 지키며 살아요</div>
+                <div class="worksheet-desc">
+                    <strong>도덕 수업 전용 학습지</strong><br>
+                    일상생활 속 다양한 상황을 통해 약속의 소중함을 배우고, 
+                    약속을 지키는 올바른 방법을 익혀보세요. 
+                    상황별 선택 활동과 성찰 활동이 포함되어 있습니다.
+                </div>
+            </a>
+            
             <a href="grade3-friendship/" class="worksheet-card">
                 <div class="grade-badge">3학년</div>
                 <div class="worksheet-title">🤝 우애 학습지</div>
@@ -98,6 +139,22 @@
                 <div class="worksheet-title">🌱 성장 마인드셋</div>
                 <div class="worksheet-desc">
                     곧 출시 예정입니다! 성장하는 마음가짐에 대해 배울 수 있는 학습지가 준비 중입니다.
+                </div>
+            </div>
+            
+            <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
+                <div class="grade-badge">6학년</div>
+                <div class="worksheet-title">🌍 세계 시민 의식</div>
+                <div class="worksheet-desc">
+                    개발 예정! 글로벌 시대에 필요한 세계 시민으로서의 자질을 기를 수 있는 학습지입니다.
+                </div>
+            </div>
+            
+            <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
+                <div class="grade-badge">통합</div>
+                <div class="worksheet-title">🧠 창의융합 사고</div>
+                <div class="worksheet-desc">
+                    개발 예정! 다양한 교과를 융합한 창의적 사고력 향상 프로그램입니다.
                 </div>
             </div>
         </div>
