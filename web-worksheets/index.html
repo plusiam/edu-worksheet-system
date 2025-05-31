@@ -49,6 +49,23 @@
         .worksheet-card.featured {
             background: linear-gradient(135deg, #fff5f5 0%, #fed7e2 100%);
             border-color: #f687b3;
+            position: relative;
+            overflow: hidden;
+        }
+        .worksheet-card.featured::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
         }
         .worksheet-title {
             font-size: 1.4em;
@@ -78,6 +95,15 @@
             font-size: 0.9em;
             margin-left: 5px;
         }
+        .subject-badge {
+            display: inline-block;
+            background: #ed8936;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
         .new-badge {
             display: inline-block;
             background: #f56565;
@@ -93,75 +119,149 @@
             50% { opacity: 0.7; }
             100% { opacity: 1; }
         }
+        .official-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .category-section {
+            margin-bottom: 40px;
+        }
+        .category-title {
+            font-size: 1.5em;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>📚 교육용 웹학습지 시스템</h1>
         <p style="text-align: center; color: #666; font-size: 1.1em; margin-bottom: 40px;">
-            인터랙티브 웹학습지로 즐겁게 배워보세요!
+            교육과정 연계 인터랙티브 웹학습지로 즐겁게 배워보세요!
         </p>
         
-        <div class="worksheet-grid">
-            <a href="grade3-unit3-lesson3/" class="worksheet-card featured">
-                <div class="grade-badge">3학년</div>
-                <div class="lesson-badge">3단원 3차시</div>
-                <span class="new-badge">NEW</span>
-                <div class="worksheet-title">🤝 약속을 지키며 살아요</div>
-                <div class="worksheet-desc">
-                    <strong>도덕 수업 전용 학습지</strong><br>
-                    일상생활 속 다양한 상황을 통해 약속의 소중함을 배우고, 
-                    약속을 지키는 올바른 방법을 익혀보세요. 
-                    상황별 선택 활동과 성찰 활동이 포함되어 있습니다.
-                </div>
-            </a>
-            
-            <a href="grade3-friendship/" class="worksheet-card">
-                <div class="grade-badge">3학년</div>
-                <div class="worksheet-title">🤝 우애 학습지</div>
-                <div class="worksheet-desc">
-                    친구와의 우정에 대해 배우고, 서로 도우며 사는 방법을 익혀보세요.
-                    인터랙티브 활동으로 재미있게 학습할 수 있습니다.
-                </div>
-            </a>
-            
-            <a href="grade4-emotion/" class="worksheet-card">
-                <div class="grade-badge">4학년</div>
-                <div class="worksheet-title">😊 감정 관리 학습지</div>
-                <div class="worksheet-desc">
-                    다양한 감정을 이해하고 건강하게 표현하는 방법을 배워보세요.
-                    감정 일기와 실습 활동이 포함되어 있습니다.
-                </div>
-            </a>
-            
-            <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
-                <div class="grade-badge">5학년</div>
-                <div class="worksheet-title">🌱 성장 마인드셋</div>
-                <div class="worksheet-desc">
-                    곧 출시 예정입니다! 성장하는 마음가짐에 대해 배울 수 있는 학습지가 준비 중입니다.
-                </div>
+        <div class="category-section">
+            <h2 class="category-title">🎯 정식 교육과정 연계 학습지</h2>
+            <div class="worksheet-grid">
+                <a href="grade3-unit3-lesson3-brotherly-love/" class="worksheet-card featured">
+                    <div class="grade-badge">3학년</div>
+                    <div class="lesson-badge">3단원 3차시</div>
+                    <div class="subject-badge">도덕</div>
+                    <span class="official-badge">교육과정</span>
+                    <span class="new-badge">NEW</span>
+                    <div class="worksheet-title">👨‍👩‍👧‍👦 우애를 지켜요</div>
+                    <div class="worksheet-desc">
+                        <strong>📋 단원: 함께하는 우리 가족</strong><br>
+                        <strong>🎯 학습문제:</strong> 형제자매와 어떻게 사이좋게 지낼 수 있을까요?<br><br>
+                        실제 교수학습지도안에 맞춰 제작된 인터랙티브 학습지입니다. 
+                        갈등 상황 분석, 역할놀이, 실천 계획 세우기 활동을 통해 
+                        형제자매 사이의 우애를 배워보세요.
+                    </div>
+                </a>
+                
+                <a href="grade3-unit3-lesson3/" class="worksheet-card">
+                    <div class="grade-badge">3학년</div>
+                    <div class="lesson-badge">3단원 3차시</div>
+                    <div class="subject-badge">도덕</div>
+                    <div class="worksheet-title">🤝 약속을 지키며 살아요</div>
+                    <div class="worksheet-desc">
+                        일상생활 속 다양한 상황을 통해 약속의 소중함을 배우고, 
+                        약속을 지키는 올바른 방법을 익혀보세요. 
+                        상황별 선택 활동과 성찰 활동이 포함되어 있습니다.
+                    </div>
+                </a>
             </div>
-            
-            <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
-                <div class="grade-badge">6학년</div>
-                <div class="worksheet-title">🌍 세계 시민 의식</div>
-                <div class="worksheet-desc">
-                    개발 예정! 글로벌 시대에 필요한 세계 시민으로서의 자질을 기를 수 있는 학습지입니다.
-                </div>
+        </div>
+        
+        <div class="category-section">
+            <h2 class="category-title">💡 일반 학습지</h2>
+            <div class="worksheet-grid">
+                <a href="grade3-friendship/" class="worksheet-card">
+                    <div class="grade-badge">3학년</div>
+                    <div class="worksheet-title">🤝 우정 학습지</div>
+                    <div class="worksheet-desc">
+                        친구와의 우정에 대해 배우고, 서로 도우며 사는 방법을 익혀보세요.
+                        인터랙티브 활동으로 재미있게 학습할 수 있습니다.
+                    </div>
+                </a>
+                
+                <a href="grade4-emotion/" class="worksheet-card">
+                    <div class="grade-badge">4학년</div>
+                    <div class="worksheet-title">😊 감정 관리 학습지</div>
+                    <div class="worksheet-desc">
+                        다양한 감정을 이해하고 건강하게 표현하는 방법을 배워보세요.
+                        감정 일기와 실습 활동이 포함되어 있습니다.
+                    </div>
+                </a>
             </div>
-            
-            <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
-                <div class="grade-badge">통합</div>
-                <div class="worksheet-title">🧠 창의융합 사고</div>
-                <div class="worksheet-desc">
-                    개발 예정! 다양한 교과를 융합한 창의적 사고력 향상 프로그램입니다.
+        </div>
+        
+        <div class="category-section">
+            <h2 class="category-title">🚧 개발 예정</h2>
+            <div class="worksheet-grid">
+                <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
+                    <div class="grade-badge">5학년</div>
+                    <div class="worksheet-title">🌱 성장 마인드셋</div>
+                    <div class="worksheet-desc">
+                        곧 출시 예정입니다! 성장하는 마음가짐에 대해 배울 수 있는 학습지가 준비 중입니다.
+                    </div>
+                </div>
+                
+                <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
+                    <div class="grade-badge">6학년</div>
+                    <div class="worksheet-title">🌍 세계 시민 의식</div>
+                    <div class="worksheet-desc">
+                        개발 예정! 글로벌 시대에 필요한 세계 시민으로서의 자질을 기를 수 있는 학습지입니다.
+                    </div>
+                </div>
+                
+                <div class="worksheet-card" style="opacity: 0.7; cursor: default;">
+                    <div class="grade-badge">통합</div>
+                    <div class="worksheet-title">🧠 창의융합 사고</div>
+                    <div class="worksheet-desc">
+                        개발 예정! 다양한 교과를 융합한 창의적 사고력 향상 프로그램입니다.
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 50px; color: #888;">
-            <p>💡 이 시스템은 GitHub Pages + Google Apps Script로 구동됩니다</p>
-            <p>개발: plusiam | 목적: 수업연구, 시각화, 자동화</p>
+        <div style="text-align: center; margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); border-radius: 15px;">
+            <h3 style="color: #2d3748; margin-bottom: 15px;">📈 시스템 특징</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                <div style="padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 1.5em; margin-bottom: 5px;">📋</div>
+                    <strong>교육과정 연계</strong><br>
+                    <small>실제 교수학습지도안 기반</small>
+                </div>
+                <div style="padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 1.5em; margin-bottom: 5px;">📊</div>
+                    <strong>실시간 데이터</strong><br>
+                    <small>학습 과정 자동 수집</small>
+                </div>
+                <div style="padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 1.5em; margin-bottom: 5px;">🎮</div>
+                    <strong>인터랙티브</strong><br>
+                    <small>즉시 피드백 제공</small>
+                </div>
+                <div style="padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 1.5em; margin-bottom: 5px;">📱</div>
+                    <strong>반응형 디자인</strong><br>
+                    <small>모든 기기에서 사용</small>
+                </div>
+            </div>
+            <p style="color: #666; margin-top: 20px;">
+                💡 <strong>GitHub Pages + Google Apps Script</strong>로 구동됩니다<br>
+                개발: plusiam | 목적: 수업연구, 시각화, 자동화
+            </p>
         </div>
     </div>
 </body>
